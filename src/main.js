@@ -80,7 +80,7 @@ new Vue({
 
   },
   mounted() {
-    this.getPosts("home")
+    this.getPosts(this.section)
   },
   methods: {
     getPosts(section) {
