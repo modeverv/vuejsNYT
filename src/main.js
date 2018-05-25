@@ -1,15 +1,15 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import axios from 'axios';
-import Vue from 'vue';
-import App from './App';
-import router from './router';
+import axios from "axios";
+import Vue from "vue";
+import App from "./App";
+import router from "./router";
 
-App
-router
-axios
+App;
+router;
+axios;
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 /*
@@ -27,11 +27,30 @@ const SECTIONS = "home, arts, automobiles, books, business, fashion, food, healt
 
 
 function buildUrl(url) {
-  return NYTBaseUrl + url + ".json?api-key=" + ApiKey
+  return NYTBaseUrl + url + ".json?api-key=" + ApiKey;
 }
 
-Vue.component('news-list', {
-  props: ['results'],
+Vue.component("news-list", {
+  props: ["results"],
+  computed: {
+    processedPosts() {
+      let posts = this.results;
+
+      // Add image_url attribute
+      posts.map(post => {
+        let imgObj = post.multimedia.find(media => media.format === "superJumbo");
+        post.image_url = imgObj ? imgObj.url : "http://placehold.it/300x200?text=N/A";
+      });
+
+      // Put Array into Chunks
+      let i, j, chunkedArray = [],
+        chunk = 4;
+      for (i = 0, j = 0; i < posts.length; i += chunk, j++) {
+        chunkedArray[j] = posts.slice(i, i + chunk);
+      }
+      return chunkedArray;
+    }
+  },
   template: `
     <section>
       <div class="row" v-for="posts in processedPosts">
@@ -49,50 +68,17 @@ Vue.component('news-list', {
       </div>
   </section>
   `,
-  computed: {
-    processedPosts() {
-      let posts = this.results;
-
-      // Add image_url attribute
-      posts.map(post => {
-        let imgObj = post.multimedia.find(media => media.format === "superJumbo");
-        post.image_url = imgObj ? imgObj.url : "http://placehold.it/300x200?text=N/A";
-      });
-
-      // Put Array into Chunks
-      let i, j, chunkedArray = [],
-        chunk = 4;
-      for (i = 0, j = 0; i < posts.length; i += chunk, j++) {
-        chunkedArray[j] = posts.slice(i, i + chunk);
-      }
-      return chunkedArray;
-    }
-  }
 });
 
 // ./app.js
 new Vue({
-  el: '#app',
+  el: "#app",
   data: {
     results: [],
-        sections: SECTIONS.split(', '), // create an array of the sections
-          section: 'home', // set default section to 'home'
-
+    sections: SECTIONS.split(", "), // create an array of the sections
+    section: "home", // set default section to 'home
   },
-  mounted() {
-    this.getPosts(this.section)
-  },
-  methods: {
-    getPosts(section) {
-      let url = buildUrl(section)
-      let _this = this
-      axios.get(url).then((response) => {
-        _this.results = response.data.results
-      }).catch(error => {
-        console.log(error)
-      })
-    }
-  },
+  /*
   computed: {
     processedPosts() {
       let posts = this.results;
@@ -109,5 +95,22 @@ new Vue({
       }
       return chunkedArray;
     }
-  }
-})
+  },
+  */
+  mounted() {
+    this.getPosts(this.section);
+  },
+  methods: {
+    getPosts(section) {
+      let url = buildUrl(section);
+      let _this = this;
+      axios.get(url).then((response) => {
+        _this.results = response.data.results;
+      }).catch(error => {
+        if (window.console) {
+          window.console.log(error);
+        }
+      });
+    }
+  },
+});
