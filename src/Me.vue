@@ -1,18 +1,27 @@
 <template>
-  <div id="app2">
-    <img src="./assets/logo.png">
-    <router-view/>
+  <div class="container" id="app1">
+    <h3 class="text-center">{{ msg }}</h3>
+    <Posts/>
   </div>
 </template>
 
 <script>
+import Posts from "./components/Posts.vue";
+
 export default {
-  name: "App"
+  data(){
+    return {
+      msg: "New York Times with Vue"
+    };
+  },
+  components: {
+    Posts
+  }
 };
 </script>
 
 <style scoped>
-#app2 {
+#app1 {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,3 +30,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
