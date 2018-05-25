@@ -3,5 +3,7 @@
 D=`date +"%Y-%m-%d %H%:%M:%S"`
 echo $D
 git add .
+npm run build
 git commit -m "$D"
+
 
