@@ -1,6 +1,5 @@
 #!/bin/bash
 D=`date +"%Y-%m-%d %H%:%M:%S"`
-# echo $D
 npm run build
 git add .
 git commit -m "$D"
