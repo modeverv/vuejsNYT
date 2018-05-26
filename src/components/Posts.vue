@@ -1,45 +1,30 @@
 <template>
     <div>
-        <section class="callout secondary">
-        <h5 class="text-center">Filter by Category</h5>
-        <form>
-            <div class="row">
-            <div class="large-12 columns">
-                <select v-on:change="getPosts(section)" v-model="section">
-                <option v-for="section in sections" :value="section">{{ section }}</option>
-                </select>
+      <MainForm :sections="sections" v-on:changeCategory="getPosts"/>
+      <section>
+        <div class="row" v-for="posts in processedPosts">
+          <div class="columns large-3 medium-6" v-for="post in posts">
+            <div class="card">
+            <div class="card-divider">
+            {{ post.title }}
             </div>
-            <!--
-            <div class="medium-6 columns">
-                <a @click="getPosts(section)" class="button expanded">Retrieve</a>
+            <a :href="post.url" target="_blank"><img :src="post.image_url"></a>
+            <div class="card-section">
+              <p>{{ post.abstract }}</p>
             </div>
-            -->
-            </div>
-        </form>
+          </div>
+          </div>
+        </div>
     </section>
-    <section>
-      <div class="row" v-for="posts in processedPosts">
-        <div class="columns large-3 medium-6" v-for="post in posts">
-          <div class="card">
-          <div class="card-divider">
-          {{ post.title }}
-          </div>
-          <a :href="post.url" target="_blank"><img :src="post.image_url"></a>
-          <div class="card-section">
-            <p>{{ post.abstract }}</p>
-          </div>
-        </div>
-        </div>
-      </div>
-  </section>
-
-    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+import MainForm from "./form/MainForm.vue";
+
 const NYTBaseUrl = "https://api.nytimes.com/svc/topstories/v2/";
-const ApiKey = "451ccfb447de47afaac45df8f86f0c08";
+const ApiKey = "80e21f6111484523a164eef4522f8a11";
 const SECTIONS =
   "home, arts, automobiles, books, business, fashion, food, health, insider, magazine, movies, national, nyregion, obituaries, opinion, politics, realestate, science, sports, sundayreview, technology, theater, tmagazine, travel, upshot, world"; // From NYTimes
 
@@ -48,11 +33,14 @@ function buildUrl(url) {
 }
 
 export default {
+  components: {
+    MainForm
+  },
   data() {
     return {
       results: [],
-      sections: SECTIONS.split(", "), // create an array of the sections
-      section: "home" // set default section to 'home
+      sections: SECTIONS.split(", "),
+      section: "home"
     };
   },
   mounted() {
@@ -70,7 +58,6 @@ export default {
           ? imgObj.url
           : "http://placehold.it/300x200?text=N/A";
       });
-
       // Put Array into Chunks
       let i,
         j,

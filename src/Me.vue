@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="app1">
-    <h3 class="text-center">{{ msg }}</h3>
+    <h3 class="text-center">{{ title }}</h3>
     <Posts/>
   </div>
 </template>
@@ -11,7 +11,7 @@ import Posts from "./components/Posts.vue";
 export default {
   data(){
     return {
-      msg: "New York Times with Vue"
+      title: "New York Times with Vue"
     };
   },
   components: {
