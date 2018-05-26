@@ -1,15 +1,18 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import axios from "axios";
+//import axios from "axios";
 import "babel-polyfill";
 import Vue from "vue";
+import VueRouter from "vue-router";
+import router from "./router.js";
 import App from "./App";
 import Me from "./Me";
-import router from "./router";
+
+// import router from "./router";
 
 App;
-router;
-axios;
+//router;
+//axios;
 Me;
 
 Vue.config.productionTip = false;
@@ -39,20 +42,13 @@ if (!Array.prototype.find) {
   };
 }
 
+
+Vue.use(VueRouter);
+
 new Vue({
-  el: "#app1",
-  components: {
-    Me
-  },
-  template: "<Me/>",
+  el: "#app",
+  router
 });
 
 
-new Vue({
-  el: "#app2",
-  router,
-  components: {
-    App
-  },
-  template: "<App/>"
-});
+
