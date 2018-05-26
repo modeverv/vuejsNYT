@@ -9,12 +9,28 @@
 </template>
 
 <script>
-
+import axios from "axios";
 import Card from "./Card.vue";
 
+const NYTBaseUrl = "https://api.nytimes.com/svc/topstories/v2/";
+const ApiKey = "80e21f6111484523a164eef4522f8a11";
+function buildUrl(url) {
+  return NYTBaseUrl + url + ".json?api-key=" + ApiKey;
+}
+
 export default {
-  props: ["results"],
+  props: ["section"],
+  data() {
+    return {
+      results: []
+    };
+  },
   components: { Card },
+  watch: {
+    section: function(newV, oldV) {
+      this.getPosts(newV);
+    }
+  },
   computed: {
     processedPosts() {
       let posts = this.results;
@@ -36,6 +52,25 @@ export default {
         chunkedArray[j] = posts.slice(i, i + chunk);
       }
       return chunkedArray;
+    }
+  },
+  mounted() {
+    this.getPosts(this.section);
+  },
+  methods: {
+    getPosts(section) {
+      let url = buildUrl(section);
+      let _this = this;
+      axios
+        .get(url)
+        .then(response => {
+          _this.results = response.data.results;
+        })
+        .catch(error => {
+          if (window.console) {
+            window.console.log(error);
+          }
+        });
     }
   }
 };
