@@ -19,8 +19,8 @@ const routes = [{
     component: App
   }
 ];
-
+/*mode: "history",*/
 export default new VueRouter({
-  /*mode: "history",*/
+
   routes
 });
