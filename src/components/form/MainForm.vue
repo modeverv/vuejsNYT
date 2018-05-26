@@ -18,6 +18,6 @@ export default {
   props: ["sections"],
   data() {
     return { section: "home" };
-  }
+  },
 };
 </script>
