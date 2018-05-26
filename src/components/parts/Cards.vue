@@ -41,7 +41,7 @@ export default {
         );
         post.image_url = imgObj
           ? imgObj.url
-          : "http://placehold.it/300x200?text=N/A";
+          : "https://placehold.it/300x200?text=N/A";
       });
       // Put Array into Chunks
       let i,
