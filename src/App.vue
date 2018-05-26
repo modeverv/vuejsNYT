@@ -14,7 +14,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 li {
   display: inline-block;
   font-size: 2rem;
