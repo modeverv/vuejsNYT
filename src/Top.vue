@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app">
         <h1>vue / vue-router</h1>
         <ul>
             <li><router-link to="/nyt">nyt</router-link></li>
@@ -17,5 +17,13 @@ li {
   display: inline-block;
   font-size: 2rem;
   margin: 1rem;
+}
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  /*margin-top: 60px;*/
 }
 </style>
