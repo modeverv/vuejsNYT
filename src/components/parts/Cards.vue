@@ -2,15 +2,7 @@
       <section>
         <div class="row" v-for="posts in processedPosts">
           <div class="columns large-3 medium-6" v-for="post in posts">
-            <div class="card">
-                <div class="card-divider">
-                    {{ post.title }}
-                </div>
-                <a :href="post.url" target="_blank"><img :src="post.image_url"></a>
-                <div class="card-section">
-                  <p>{{ post.abstract }}</p>
-                </div>
-            </div>
+              <Card :post="post"/>
           </div>
         </div>
     </section>
@@ -18,9 +10,11 @@
 
 <script>
 
+import Card from "./Card.vue";
 
 export default {
   props: ["results"],
+  components: { Card },
   computed: {
     processedPosts() {
       let posts = this.results;

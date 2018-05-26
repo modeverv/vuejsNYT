@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 import MainForm from "./form/MainForm.vue";
 import Cards from "./parts/Cards.vue";
